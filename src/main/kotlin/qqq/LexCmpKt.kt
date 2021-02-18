@@ -1,4 +1,4 @@
-//import java.util.*
+package qqq//import java.util.*
 //import kotlin.math.min
 //
 //private fun fff() {
@@ -50,22 +50,22 @@
 //    }
 //}
 //
-////fun orderRuleFoo() {
-////
-////    val orderRule = listOf("foo", "bar", "asd")
-////    val shuffled = listOf("foo", "bar", "asd", "abc", "efg", "foobar", "barfoo", "foo_abc", "bar foo").shuffled()
-////
-////    val sorted = shuffled.sortedWith(Comparator { a, b ->
-////        val cmp = a.compareTo(b)
-////        if (cmp == 0) return@Comparator 0
-////        val ind1 = orderRule.indexOf(a)
-////        val ind2 = orderRule.indexOf(b)
-////        when {
-////            ind1 == -1 && ind2 == -1 -> cmp
-////            ind1 == -1 -> 1
-////            ind2 == -1 -> -1
-////            else -> ind1 - ind2
-////        }
-////    })
-////    println(sorted)
-////}
+//fun orderRuleFoo() {
+//
+//    val orderRule = listOf("foo", "bar", "asd")
+//    val shuffled = listOf("foo", "bar", "asd", "abc", "efg", "foobar", "barfoo", "foo_abc", "bar foo").shuffled()
+//
+//    val sorted = shuffled.sortedWith(Comparator { a, b ->
+//        val cmp = a.compareTo(b)
+//        if (cmp == 0) return@Comparator 0
+//        val ind1 = orderRule.indexOf(a)
+//        val ind2 = orderRule.indexOf(b)
+//        when {
+//            ind1 == -1 && ind2 == -1 -> cmp
+//            ind1 == -1 -> 1
+//            ind2 == -1 -> -1
+//            else -> ind1 - ind2
+//        }
+//    })
+//    println(sorted)
+//}

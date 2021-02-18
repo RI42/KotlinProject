@@ -1,4 +1,4 @@
-
+package qqq
 //class Obj {
 //    var prop: Prop = Prop()
 //

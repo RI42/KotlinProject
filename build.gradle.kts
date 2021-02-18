@@ -1,10 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
+import kotlinx.benchmark.gradle.*
+import org.jetbrains.kotlin.allopen.gradle.*
 
 plugins {
     java
-    kotlin("jvm") version "1.4.10"
-    kotlin("plugin.serialization") version "1.4.10"
+    kotlin("jvm") version "1.4.30"
+    kotlin("plugin.serialization") version "1.4.30"
+    kotlin("plugin.allopen") version "1.4.30"
     id("kotlinx.benchmark") version "0.2.0-dev-20"
     application
 }
@@ -17,13 +19,11 @@ repositories {
     maven(url = "https://kotlin.bintray.com/kotlinx/")
 }
 dependencies {
-
-    val kotlinVersion = "1.4.10"
-    val coroutines = "1.3.9"
+    implementation(kotlin("reflect"))
+    implementation(kotlin("stdlib"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
     implementation("org.jetbrains.kotlinx:kotlinx.benchmark.runtime-jvm:0.2.0-dev-20")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0-RC2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.1.0")
 //    implementation("com.google.code.gson:gson:2.8.6")
 //    testImplementation(group = "junit", name = "junit", version = "4.12")
@@ -31,18 +31,33 @@ dependencies {
 
 }
 
+tasks.test {
+    useJUnit()
+}
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+}
+
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
-    jvmTarget = "1.8"
+//    freeCompilerArgs = listOf("-Xjvm-default=all")
+    useIR = true
+    jvmTarget = "15"
 }
 
 val compileTestKotlin: KotlinCompile by tasks
 compileTestKotlin.kotlinOptions {
-    jvmTarget = "1.8"
+    useIR = true
+    jvmTarget = "15"
 }
 
 application {
-    mainClassName = "MainKt"
+    mainClass.set("MainKt")
+}
+
+configure<AllOpenExtension> {
+    annotation("org.openjdk.jmh.annotations.State")
 }
 
 benchmark {
@@ -52,13 +67,15 @@ benchmark {
         getByName("main") { // main configuration is created automatically, but you can change its defaults
             warmups = 10 // number of warmup iterations
             iterations = 10 // number of iterations
-            iterationTime = 5 // time in seconds per iteration
+            iterationTime = 5000 // time in seconds per iteration
+            iterationTimeUnit = "ms"
         }
         create("smoke") {
             warmups = 5 // number of warmup iterations
             iterations = 5 // number of iterations
-            iterationTime = 1 // time in seconds per iteration
-//            iterationTimeUnit = "ms" // time unity for iterationTime, default is seconds
+            iterationTime = 1000 // time in seconds per iteration
+//            mode = "All"
+            iterationTimeUnit = "ms" // time unity for iterationTime, default is seconds
         }
     }
 
@@ -67,7 +84,8 @@ benchmark {
         // This one matches compilation base name, e.g. 'jvm', 'jvmTest', etc
 
         register("main") {
-            (this as kotlinx.benchmark.gradle.JvmBenchmarkTarget).jmhVersion = "1.25.2" // available only for JVM compilations & Java source sets
+            this as JvmBenchmarkTarget
+            jmhVersion = "1.25.2" // available only for JVM compilations & Java source sets
         }
     }
 }

@@ -1,3 +1,5 @@
+package qqq
+
 class RResult<out T> private constructor(
     @PublishedApi internal val resource: Resource,
 ) {

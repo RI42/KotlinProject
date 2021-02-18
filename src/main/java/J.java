@@ -1,18 +1,33 @@
-import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.lang.reflect.Proxy;
+import java.util.*;
+
 
 public class J {
-
-    public static void main() throws Exception {
-        var m = new HashMap<String, Integer>();
-        m.put("1", 1);
-        m.put("2", 2);
-        m.put("3", 3);
-        m.put("4", 4);
-        m.keySet().remove("1");
-        System.out.println(m.toString());
+    interface IApple {
+        String getColor();
     }
+
+    private static class Apple implements IApple {
+        private String color = "red";
+
+        public String getColor() {
+            return color;
+        }
+    }
+
+    public static void main() throws Throwable {
+        Object proxyInstance = Proxy.newProxyInstance(
+                J.class.getClassLoader(),
+                Apple.class.getInterfaces(),
+                (proxy, method, args1) -> {
+                    System.out.println("Called getColor() method on Apple");
+                    return method.invoke(new Apple(), args1);
+                });
+
+        IApple appleProxy = (IApple) proxyInstance;
+        System.out.println(appleProxy.getColor());
+    }
+
 
 }
 

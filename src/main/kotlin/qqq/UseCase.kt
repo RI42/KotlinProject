@@ -1,4 +1,4 @@
-
+package qqq
 //import kotlinx.coroutines.delay
 //
 //typealias Foo = suspend () -> Int
@@ -8,7 +8,7 @@
 //    operator fun invoke(builder: Param.() -> Unit): R
 //}
 //
-//class UseCaseImpl : UseCase<UseCaseImpl.UseCaseImplParam, RResult<Int>> {
+//class UseCaseImpl : UseCase<UseCaseImpl.UseCaseImplParam, qqq.RResult<Int>> {
 //
 //    val f = suspend {
 //        delay(100)
@@ -16,11 +16,11 @@
 //
 //    }
 //
-//    override operator fun invoke(param: UseCaseImplParam): RResult<Int> {
-//        return RResult.success(param.age)
+//    override operator fun invoke(param: UseCaseImplParam): qqq.RResult<Int> {
+//        return qqq.RResult.success(param.age)
 //    }
 //
-//    override operator fun invoke(builder: UseCaseImplParam.() -> Unit): RResult<Int> {
+//    override operator fun invoke(builder: UseCaseImplParam.() -> Unit): qqq.RResult<Int> {
 //        return foo(UseCaseImplParam().apply(builder))
 //    }
 //
@@ -28,6 +28,6 @@
 //
 //}
 //
-//fun foo(p: UseCaseImpl.UseCaseImplParam): RResult<Int> {
-//    return RResult.success(p.age)
+//fun foo(p: UseCaseImpl.UseCaseImplParam): qqq.RResult<Int> {
+//    return qqq.RResult.success(p.age)
 //}

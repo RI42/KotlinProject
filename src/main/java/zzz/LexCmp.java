@@ -1,3 +1,5 @@
+package zzz;
+
 import java.util.Arrays;
 
 public class LexCmp {
