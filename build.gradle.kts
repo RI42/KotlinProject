@@ -4,9 +4,9 @@ import org.jetbrains.kotlin.allopen.gradle.*
 
 plugins {
     java
-    kotlin("jvm") version "1.4.30"
-    kotlin("plugin.serialization") version "1.4.30"
-    kotlin("plugin.allopen") version "1.4.30"
+    kotlin("jvm") version "1.4.31"
+    kotlin("plugin.serialization") version "1.4.31"
+    kotlin("plugin.allopen") version "1.4.31"
     id("kotlinx.benchmark") version "0.2.0-dev-20"
     application
 }
