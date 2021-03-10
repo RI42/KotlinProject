@@ -29,6 +29,7 @@ dependencies {
 //    implementation("com.google.code.gson:gson:2.8.6")
 //    testImplementation(group = "junit", name = "junit", version = "4.12")
     testImplementation(kotlin("test-junit"))
+    implementation(kotlin("script-runtime"))
 
 }
 
