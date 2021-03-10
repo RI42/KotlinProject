@@ -6,35 +6,28 @@ object PolybiusSquare {
         println("----- Полибианский квадрат -----")
         val msg = "BARRACUDA" // readLine("Слово для шифрования: ").ifEmpty { "BARRACUDA" }
         val encoded = encode(msg)
-        val decoded = decode(encoded)
-        println(alphabet)
+        println(alphabetTable.joinToString("\n") { it.joinToString("") })
         println("Оригинал: $msg")
         println("Шифр: $encoded")
     }
 
     //Полибианский квадрат
-    val alphabet: String = """
-        qrwty
-        iamej
-        opslf
-        xnzgd
-        kubch
-        
-    """.trimIndent()
+    val alphabet = "qrwtyiamejopslfxnzgdkubch"
+    val width = 5
 
-    private val indices = alphabet.mapIndexed { index, c -> c to index }.toMap()
+    val alphabetTable = alphabet.chunked(width).map { it.toList() }
 
-    // ширина квадрата
-    val width = alphabet.indexOf('\n') + 1
+    private val indices = alphabetTable
+        .flatMapIndexed { i, list ->
+            // запоминаем индекс каждой буквы из таблицы
+            list.mapIndexed { j, c -> c to (i to j) }
+        }
+        .toMap()
 
     fun encode(msg: String): String = msg.toLowerCase().map {
-        val pos = (indices[it]!! + width) % alphabet.length
-        alphabet[pos]
+        val (i, j) = indices[it]!!
+        val newPos = (i + 1) % alphabetTable.size
+        alphabetTable[newPos][j] // берём нижнюю букву
     }.joinToString(separator = "")
-
-    fun decode(cipher: String): String = cipher.map {
-        val pos = (indices[it]!! - width + alphabet.length) % alphabet.length
-        alphabet[pos]
-    }.joinToString(separator = "")
-
 }
+
